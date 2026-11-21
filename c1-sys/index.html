@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>
+	Práctica 8 - Procesadores Multinúcleo
+</title>
+<style type="text/css">
+*{
+	box-sizing:     border-box;
+	font-size:      12pt;
+}
+
+body{
+	background:          rgb(2,0,36);
+	background:          linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);
+	width:               100vw;
+	height:              100vw;
+	overflow-x:          hidden;
+	overflow-y:          hidden;
+	font-family:         Tahoma, sans-serif;
+}
+
+.container{
+	width:               50vw;
+	margin:              0 auto;
+	padding:             0 20px 10px 20px;
+	border:              3px solid white;
+	border-radius:       15px;
+	box-shadow:          5px 5px 5px black;
+	background:          whitesmoke;
+}
+
+.container header{
+/*	width:               100%;*/
+/*	margin:              0 10px;*/
+	border-bottom:       2px solid rgba(0,212,255,1);
+	border-bottom:       2px solid linear-gradient(0deg, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 50%, rgba(9,9,121,1) 0%);
+}
+.container main{
+	margin:              10px 0;
+}
+.container footer{
+/*	margin:              0 10px;*/
+	padding-top:         10px;
+	border-top:          2px solid rgba(0,212,255,1);
+}
+
+.title{
+	font-weight:         bold;
+	font-size:           x-large;
+	text-align:          center;
+	padding-bottom:      0;
+	margin-bottom:       0;
+}
+
+button{
+	min-width:           7em;
+	padding:             0.25em;
+	background:          white;
+	border-radius:       5px;
+	box-shadow:          2px 2px 2px black;
+/*	transition-duration: 0.1s;*/
+
+}
+
+button:hover{
+	color:               white;
+}
+
+button:active{
+	box-shadow:          0px 0px 0px black;
+	transform:           translateY(2px)
+}
+
+.btnCalc{
+	display:             block;
+	margin-right:        0;
+	margin-left:         auto;
+	padding:             0.5em;
+	font-size:           larger;
+	border:              2px solid #008CBA;
+}
+.btnCalc:hover{
+	background:          #008CBA;
+}
+
+.btnOn{
+	border:              2px solid #00BA8C;
+}
+.btnOn:hover{
+	background:          #00BA8C;
+}
+
+.btnOff{
+	border:              2px solid #BA008C;
+}
+.btnOff:hover{
+	background:          #BA008C;
+}
+
+</style>
+</head>
+<body>
+	<article class="container">
+		<header>
+			<h1 class="title">Distributed Pi calculator</h1>
+		</header>
+		<main>
+			<p>Estimate Pi with <input id="terms" type="text" value="1000"> terms.</p>
+			<button class="btnCalc" onclick="calculatePi();">Calculate!</button>
+
+			<p id="result"></p>
+			<p>
+				Led status is: <span id="rp2040led"><!--led--></span>.
+				<button class="btnOn" onclick="updateLed(1);">On</button>
+				<button class="btnOff" onclick="updateLed(0);">Off</button>
+			</p>
+		</main>
+		<footer>
+			RP2040 temperature: <span id="rp2040temp"><!--temp--></span>°C
+		</footer>
+	</article>
+</body>
+</html>
+
+<script language="javascript">
+
+function calculatePi(on){
+	n = document.getElementById("terms").value;
+	let req = new XMLHttpRequest();
+	req.open('GET', 'pi?n=' + n);
+	req.onload = function() {
+	if (req.status == 200)
+			document.getElementById("result").innerHTML = 'Pi calculated with ' + n + ' terms approximates to: ' + req.responseText;
+		else
+			console.log("Error: " + req.status);
+	}
+	req.send();
+}
+
+function updateLed(on){
+	let req = new XMLHttpRequest();
+	req.open('GET', 'led?on=' + on);
+	req.onload = function() {
+	if (req.status == 200)
+			document.getElementById("rp2040led").innerHTML = req.responseText;
+		else
+			console.log("Error: " + req.status);
+	}
+	req.send();
+}
+
+function updateTemperature(){
+	let req = new XMLHttpRequest();
+	req.open('GET', "temp");
+	req.onload = function() {
+		if (req.status == 200)
+			document.getElementById("rp2040temp").innerHTML = req.responseText;
+		else
+			console.log("Error: " + req.status);
+	}
+	req.send();
+}
+
+window.onload = (event) => {
+	window.setInterval(updateTemperature, 1000);
+}
+
+</script>
+
