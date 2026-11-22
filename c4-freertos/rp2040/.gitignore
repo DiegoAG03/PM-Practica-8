@@ -1,0 +1,17 @@
+# Ignorar todo por defecto
+*
+
+# Permitir solo código fuente, configuración y subcarpetas
+!.gitignore
+!LICENSE
+!CMakeLists.txt
+!*.c
+!*.cpp
+!*.h
+!*.hpp
+!*.cmake
+!*/
+
+# Ignorar compilación y readme de la plantilla
+build/
+readme.MD
