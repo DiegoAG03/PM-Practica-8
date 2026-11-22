@@ -4,7 +4,7 @@
 
 **Asignatura:** Procesadores Multinúcleo
 
-Repositorio creado para la Práctica 8 de Procesadores Multinúcleo, el cual contiene la implementación de un sistema disbuido bajo el modelo cliente-servidor (RPC sobre UART) sobre la tarjeta **UNIT DualMCU (RP2040 + ESP32)** El objetivo principal es alojar un servidor web y coordinar la distribución de carga computacional en el ESP32, mientras que en el RP2040 se lleve a cabo el control de periféricos y la ejecución paralela de algoritmos numéricos. Asímismo, se realiza la ejecución tanto en un entorno **MicroPython** intepretado, como sobre un sistema operativo en tiempo real **FreeRTOS**.
+Repositorio creado para la Práctica 8 de Procesadores Multinúcleo, el cual contiene la implementación de un sistema disbuido bajo el modelo cliente-servidor (RPC sobre UART) sobre la tarjeta **UNIT DualMCU (RP2040 + ESP32)** El objetivo principal es alojar un servidor web y coordinar la distribución de carga computacional en el ESP32, mientras que en el RP2040 se lleva a cabo el control de periféricos y la ejecución paralela de algoritmos numéricos. Asímismo, se realiza la ejecución tanto en un entorno **MicroPython** intepretado, como sobre un sistema operativo en tiempo real **FreeRTOS**.
 
 ## Estructura del repositorio
 
@@ -15,7 +15,7 @@ El repositorio contiene los siguientes experimentos:
 - `c3-pi-multicore/`: Experimentos 3 y 4 — Cálculo distribuido en partes iguales entre los dos núcleos del RP2040 y el ESP32, con medición de tiempo.
 - `c4-freertos/`: Experimento 5 — Migración del nodo RP2040 a C/C++ sobre FreeRTOS SMP, manteniendo el coordinador web en el ESP32 con MicroPython.
 
-## Requisitos de Hardware y Software (Completar)
+## Requisitos de Hardware y Software
 
 ### Hardware
 * Tarjeta **UNIT DualMCU** (RP2040 + ESP32).
